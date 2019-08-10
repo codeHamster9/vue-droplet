@@ -1,37 +1,51 @@
 <template>
-  <div class="login">
-    <h3>Sign In</h3>
-    <input type="text" v-model="email" placeholder="Email">
-    <br>
-    <input type="password" v-model="password" placeholder="Password">
-    <br>
-    <button v-on:click="signIn">Connection</button>
-    <p>You don't have an account ? You can
-      <router-link to="/sign-up">create one</router-link>
-    </p>
-  </div>
+  <v-container fluid
+               grid-list-lg>
+    <v-layout row
+              justify-center>
+      <v-dialog :value="true"
+                hide-overlay
+                persistent
+                max-width="290">
+        <v-card>
+          <v-card-title class="headline">Login</v-card-title>
+          <v-card-text>
+            <simple-form @submit="signIn"
+                         :error-text="msg"></simple-form>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 import firebase from 'firebase';
+import SimpleForm from './SimpleForm.vue';
 
 export default {
   name: 'login',
+  components: {
+    SimpleForm,
+  },
   data() {
     return {
-      email: '',
-      password: '',
+      dialog: false,
+      msg: '',
     };
   },
   methods: {
-    signIn() {
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+    signIn({ email, password }) {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
         .then(
           (user) => {
+            console.log(user);
             this.$router.replace('hello');
           },
           (err) => {
-            alert(`Oops. ${err.message}`);
+            this.msg = err.message;
           },
         );
     },
@@ -40,7 +54,7 @@ export default {
 </script>
 
 <style scoped>
-/* "scoped" attribute limit the CSS to this component only */
+
 .login {
   margin-top: 40px;
 }
