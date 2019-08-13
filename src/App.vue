@@ -1,6 +1,9 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" dark fixed clipped app></v-navigation-drawer>
+    <v-navigation-drawer v-model="drawer" dark fixed clipped app>
+
+
+    </v-navigation-drawer>
     <v-toolbar color="red" fixed clipped-left app>
       <v-toolbar-side-icon @click.stop="drawer=!drawer"></v-toolbar-side-icon>
       <v-icon class="mx-3">fab fa-youtube</v-icon>

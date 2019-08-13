@@ -3,11 +3,12 @@ import firebase from 'firebase';
 import Router from 'vue-router';
 import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
+import SmileyCheck from '@/views/SmileyCheck.vue';
 import HelloWorld from '@/components/HelloWorld.vue';
-import Home from './views/Home.vue';
 
 Vue.use(Router);
 const router = new Router({
+  mode: 'history',
   routes: [{
     path: '/about',
     name: 'about',
@@ -39,14 +40,21 @@ const router = new Router({
       requiresAuth: true,
     },
   },
+  {
+    path: '/smiley',
+    name: 'SmileyCheck',
+    component: SmileyCheck,
+    meta: {
+      requiresAuth: true,
+    },
+  },
   ],
 });
 
 
 router.beforeEach((to, from, next) => {
-  const {
-    currentUser,
-  } = firebase.auth();
+  const { currentUser } = firebase.auth();
+
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('login');
