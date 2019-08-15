@@ -42,7 +42,7 @@ export default {
         .then(
           (user) => {
             console.log(user);
-            this.$router.replace('hello');
+            this.$router.push({ name: 'home' });
           },
           (err) => {
             this.msg = err.message;

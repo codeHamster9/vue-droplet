@@ -4,7 +4,8 @@ import Router from 'vue-router';
 import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
 import SmileyCheck from '@/views/SmileyCheck.vue';
-import HelloWorld from '@/components/HelloWorld.vue';
+import Home from '@/views/Home.vue';
+
 
 Vue.use(Router);
 const router = new Router({
@@ -20,9 +21,6 @@ const router = new Router({
     path: '*',
     redirect: '/login',
   }, {
-    path: '/',
-    redirect: '/login',
-  }, {
     path: '/login',
     name: 'Login',
     component: Login,
@@ -32,9 +30,9 @@ const router = new Router({
     component: SignUp,
   },
   {
-    path: '/hello',
-    name: 'hello',
-    component: HelloWorld,
+    path: '/',
+    name: 'home',
+    component: Home,
     meta: {
       requiresAuth: true,
     },
@@ -59,7 +57,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('login');
-  else if (!requiresAuth && currentUser) next('hello');
+  else if (!requiresAuth && currentUser) next('home');
   else next();
 });
 
