@@ -1,14 +1,28 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" dark fixed clipped app>
+    <v-navigation-drawer v-model="drawer" fixed clipped app>
+      <v-list two-line>
+        <v-list-tile avatar>
+          <v-list-tile-content>
+            <v-list-tile-action>
+                     <router-link  to="/smiley">
+                  Smile Checker
+             </router-link>
+                      <router-link  to="/hello">
+                  Home
+             </router-link>
+            </v-list-tile-action>
 
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
 
     </v-navigation-drawer>
-    <v-toolbar color="red" fixed clipped-left app>
+    <v-toolbar color="light-blue accent-1" fixed clipped-left app>
       <v-toolbar-side-icon @click.stop="drawer=!drawer"></v-toolbar-side-icon>
       <v-icon class="mx-3">fab fa-youtube</v-icon>
       <v-toolbar-title class="mr-5 align-center">
-        <span class="title">Sprint Namer</span>
+        <span class="title">Portal</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-layout row justify-end>

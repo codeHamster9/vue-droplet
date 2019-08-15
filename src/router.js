@@ -8,7 +8,6 @@ import HelloWorld from '@/components/HelloWorld.vue';
 
 Vue.use(Router);
 const router = new Router({
-  mode: 'history',
   routes: [{
     path: '/about',
     name: 'about',
@@ -34,7 +33,7 @@ const router = new Router({
   },
   {
     path: '/hello',
-    name: 'Hello',
+    name: 'hello',
     component: HelloWorld,
     meta: {
       requiresAuth: true,
@@ -53,7 +52,9 @@ const router = new Router({
 
 
 router.beforeEach((to, from, next) => {
-  const { currentUser } = firebase.auth();
+  const {
+    currentUser,
+  } = firebase.auth();
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
