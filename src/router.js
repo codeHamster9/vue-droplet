@@ -5,6 +5,7 @@ import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
 import SmileyCheck from '@/views/SmileyCheck.vue';
 import Home from '@/views/Home.vue';
+import PageNotFound from '@/views/404.vue';
 import Gifts from '@/views/Gifts.vue';
 
 
@@ -19,9 +20,11 @@ const router = new Router({
     component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
   },
   {
-    path: '*',
-    redirect: '/login',
-  }, {
+      path: '/404',
+      name: '404',
+      component: PageNotFound,
+    },
+    {
     path: '/login',
     name: 'Login',
     component: Login,
