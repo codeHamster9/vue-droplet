@@ -1,33 +1,49 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" fixed clipped app>
-      <v-list two-line>
-        <v-list-tile avatar>
-          <v-list-tile-content>
+    <v-navigation-drawer v-model="drawer"
+                         fixed
+                         clipped
+                         dark
+                         app>
+      <v-list>
+        <v-subheader class="mt-3 grey--text text--darken-1">ROUTES</v-subheader>
+        <v-list-tile v-for="item in items"
+                     :key="item.text"
+                     ripple
+                     @click="navigate(item)">
             <v-list-tile-action>
-                     <router-link  to="/smiley">
-                  Smile Checker
-             </router-link>
-                      <router-link  to="/hello">
-                  Home
-             </router-link>
+            <v-icon>{{ item.icon }}</v-icon>
             </v-list-tile-action>
+          <v-list-tile-content>
+
+            <v-list-tile-title>
+              {{ item.text }}
+            </v-list-tile-title>
 
           </v-list-tile-content>
         </v-list-tile>
-      </v-list>
 
+      </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="light-blue accent-1" fixed clipped-left app>
+
+    <v-toolbar color="light-blue accent-1"
+               fixed
+               clipped-left
+               app>
       <v-toolbar-side-icon @click.stop="drawer=!drawer"></v-toolbar-side-icon>
       <v-icon class="mx-3">fab fa-youtube</v-icon>
       <v-toolbar-title class="mr-5 align-center">
         <span class="title">Portal</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-layout row justify-end>
-        <v-menu v-model="showMenu" absolute offset-y style="max-width: 600px">
-          <v-avatar slot="activator" color="black">
+      <v-layout row
+                justify-end>
+        <v-menu v-model="showMenu"
+                absolute
+                offset-y
+                style="max-width: 600px">
+          <v-avatar slot="activator"
+                    color="black">
             <v-icon dark>account_circle</v-icon>
           </v-avatar>
           <v-list>
@@ -40,7 +56,8 @@
     </v-toolbar>
     <v-content>
       <v-container fill-height>
-        <v-layout justify-center align-center>
+        <v-layout justify-center
+                  align-center>
           <v-flex md12>
             <router-view></router-view>
           </v-flex>

@@ -1,21 +1,29 @@
 <template>
-  <v-container fluid fill-height>
+  <v-container fluid
+               fill-height>
     <v-layout column>
       <v-flex>
-        <v-btn small color="blue" @click="add">Add</v-btn>
-        <v-btn small color="red" @click="remove">remove</v-btn>
+        <v-btn small
+               color="blue"
+               @click="add">Add</v-btn>
+        <v-btn small
+               color="red"
+               @click="remove">remove</v-btn>
       </v-flex>
       <v-flex>
-        <v-container fluid fill-height class="box-container pa-0 ma-0">
-          <v-layout justify-start align-end row reverse>
-            <v-flex
-              v-for="(box, index) in boxes"
-              :key="box.id  "
-              class="box"
-              fill-height
-              :class="{'minimized': box.minimized,'first': index == 0 }"
-              @click="minimize(box)"
-            >
+        <v-container fluid
+                     fill-height
+                     class="box-container pa-0 ma-0">
+          <v-layout justify-start
+                    align-end
+                    row
+                    reverse>
+            <v-flex v-for="(box, index) in boxes"
+                    :key="box.id  "
+                    class="box"
+                    fill-height
+                    :class="{'minimized': box.minimized,'first': index == 0 }"
+                    @click="minimize(box)">
               <div>Box:{{box.id}}</div>
               <!-- <iframe src="https://vuejs.org/v2/guide/list.html"/> -->
             </v-flex>
@@ -42,7 +50,7 @@ export default {
     },
     minimize(box) {
       // eslint-disable-next-line
-      box.minimized = !box.minimized;
+        box.minimized = !box.minimized;
     },
   },
 };
@@ -55,10 +63,7 @@ iframe {
   border: none;
   overflow-y: auto;
 }
-.box-container {
-  /* height: 600px; */
-  /* width: 1800px; */
-}
+
 .box {
   height: 585px;
   min-width: 300px;
