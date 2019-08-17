@@ -11,9 +11,9 @@
                      :key="item.text"
                      ripple
                      @click="navigate(item)">
-            <v-list-tile-action>
+          <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
-            </v-list-tile-action>
+          </v-list-tile-action>
           <v-list-tile-content>
 
             <v-list-tile-title>
@@ -74,11 +74,31 @@ export default {
   data: () => ({
     drawer: null,
     showMenu: false,
+    items: [
+      {
+        text: 'Home',
+        url: '/',
+        icon: 'home',
+      },
+      {
+        text: 'Smile',
+        url: '/smiley',
+        icon: 'group',
+      },
+      {
+        text: 'Gifts',
+        url: '/gifts',
+        icon: 'gift',
+      },
+    ],
   }),
   props: {
     source: String,
   },
   methods: {
+    navigate(item) {
+      this.$router.push(item.url);
+    },
     logout() {
       firebase
         .auth()
