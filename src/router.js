@@ -5,6 +5,7 @@ import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
 import SmileyCheck from '@/views/SmileyCheck.vue';
 import Home from '@/views/Home.vue';
+import Gifts from '@/views/Gifts.vue';
 
 
 Vue.use(Router);
@@ -45,6 +46,14 @@ const router = new Router({
       requiresAuth: true,
     },
   },
+    {
+      path: '/gifts',
+      name: 'Gifts',
+      component: Gifts,
+      meta: {
+        requiresAuth: true,
+      },
+    },
   ],
 });
 
