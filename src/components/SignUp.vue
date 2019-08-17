@@ -30,7 +30,7 @@ export default {
           this.$router.replace('home');
         },
         (err) => {
-          alert(`Oops. ${err.message}`);
+          console.log(`Oops. ${err.message}`);
         },
       );
     },
