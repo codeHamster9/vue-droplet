@@ -6,8 +6,10 @@
     <v-text-field v-model="email"
                   name="user"
                   label="UserName"
+                  prepend-icon="person"
                   id="user_name"></v-text-field>
     <v-text-field v-model="password"
+                  prepend-icon="lock"
                   name="name"
                   label="Enter your password"
                   hint="At least 4 characters"
