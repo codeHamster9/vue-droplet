@@ -5,50 +5,57 @@ import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
 import SmileyCheck from '@/views/SmileyCheck.vue';
 import Home from '@/views/Home.vue';
+import About from '@/views/About.vue';
 import PageNotFound from '@/views/404.vue';
 import Gifts from '@/views/Gifts.vue';
 
-
 Vue.use(Router);
 const router = new Router({
-  routes: [{
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
-  },
-  {
+  routes: [
+    {
+      path: '/about',
+      name: 'about',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+    },
+    {
       path: '/404',
       name: '404',
       component: PageNotFound,
     },
     {
-    path: '/login',
-    name: 'Login',
-    component: Login,
-  }, {
-    path: '/sign-up',
-    name: 'SignUp',
-    component: SignUp,
-  },
-  {
-    path: '/',
-    name: 'home',
-    component: Home,
-    meta: {
-      requiresAuth: true,
+      path: '/login',
+      name: 'Login',
+      component: Login,
     },
-  },
-  {
-    path: '/smiley',
-    name: 'SmileyCheck',
-    component: SmileyCheck,
-    meta: {
-      requiresAuth: true,
+    {
+      path: '/sign-up',
+      name: 'SignUp',
+      component: SignUp,
     },
-  },
+    {
+      path: '/about',
+      name: 'About',
+      component: About,
+    },
+    {
+      path: '/',
+      name: 'home',
+      component: Home,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/smiley',
+      name: 'SmileyCheck',
+      component: SmileyCheck,
+      meta: {
+        requiresAuth: true,
+      },
+    },
     {
       path: '/gifts',
       name: 'Gifts',
@@ -60,11 +67,8 @@ const router = new Router({
   ],
 });
 
-
 router.beforeEach((to, from, next) => {
-  const {
-    currentUser,
-  } = firebase.auth();
+  const { currentUser } = firebase.auth();
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 

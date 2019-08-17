@@ -73,8 +73,6 @@ iframe {
   box-shadow: -15px 0 20px rgba(0, 0, 0, 0.75), 5px 0 20px rgba(0, 0, 0, 0.15);
   overflow: hidden;
 }
-.box:hover {
-}
 .minimized {
   height: 50px !important;
   width: 150px !important;
