@@ -10,12 +10,16 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
-    "firebase": "^5.5.7",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.3",
+    "firebase": "^6.4.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.6.10",
     "vue-router": "^3.1.2",
     "vuetify": "^1.5.16",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.1",
+    "webpack": "^4.39.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.10.0",
@@ -27,8 +31,9 @@
     "@vue/test-utils": "^1.0.0-beta.20",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.0.1",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.2.0",
+    "style-loader": "^1.0.0",
     "vue-template-compiler": "^2.6.10"
   }
 }
