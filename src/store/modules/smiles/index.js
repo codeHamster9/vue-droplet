@@ -1,4 +1,6 @@
 import db from '@/firebase';
+import TYPES from '@/store/modules/smiles/types';
+import mutations from './mutations';
 
 export const types = {};
 
@@ -10,24 +12,26 @@ const actions = {
   async fetch({ commit }) {
     try {
       const querySnapshot = await db.collection('smileys').get();
-      const payload = [];
 
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        payload.push({ id: doc.id, ...data });
+      const payload = querySnapshot.docs.map((doc) => {
+        const { date, color, kidId } = doc.data();
+        return {
+          id: doc.id, date, color, kidId: kidId.id,
+        };
       });
 
-      commit('addAll', payload);
+      commit(TYPES.MUTATIONS.ADD_ALL, payload);
     } catch (error) {
-      console.log('fetch Error');
+      console.log(error);
     }
   },
   async add(context, { color, date }) {
     try {
-      const docRef = await db.collection('smileys').add({ color, date });
+      const docRef = await db.collection('smileys').add({ color, date, kidId: 'TKOwf1s1dz2vaqtTaBG6' });
 
-      context.commit('addOne', {
+      context.commit(TYPES.MUTATIONS.ADD_ONE, {
         id: docRef.id,
+        kidId: 'TKOwf1s1dz2vaqtTaBG6',
         color,
         date,
       });
@@ -43,9 +47,9 @@ const actions = {
           color: 'orange accent-2',
           date: payload.date,
         });
-      context.commit('update', payload);
+      context.commit(TYPES.MUTATIONS.UPDATE, payload);
     } catch (error) {
-      context.commit('update', {
+      context.commit(TYPES.MUTATIONS.UPDATE, {
         ...payload,
         color: 'yellow darken-1',
       });
@@ -56,25 +60,10 @@ const actions = {
       db.collection('smileys')
         .doc(payload.id)
         .delete();
-      context.commit('removeOne', payload);
+      context.commit(TYPES.MUTATIONS.REMOVE_ONE, payload);
     } catch (error) {
-      context.commit('addOne', payload);
+      context.commit(TYPES.MUTATIONS.ADD_ONE, payload);
     }
-  },
-};
-const mutations = {
-  addAll({ smileys }, payload) {
-    smileys = payload;
-  },
-  addOne({ smileys }, payload) {
-    smileys.push(payload);
-  },
-  removeOne({ smileys }, payload) {
-    smileys = smileys.filter(i => i.date !== payload.date);
-  },
-  update({ smileys }, payload) {
-    const smile = smileys.find(s => s.id === payload.id);
-    smile.color = 'orange accent-2';
   },
 };
 

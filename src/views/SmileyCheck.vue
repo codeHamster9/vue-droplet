@@ -59,6 +59,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import SMILES from '@/store/modules/smiles/types';
 
 export default {
   data: () => ({
