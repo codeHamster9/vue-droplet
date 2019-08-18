@@ -6,7 +6,7 @@ import smiles from '@/store/modules/smiles';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  strict: true,
+  strict: false,
   modules: {
     user,
     smiles,
