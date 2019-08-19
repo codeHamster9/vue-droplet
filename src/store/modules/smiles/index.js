@@ -2,8 +2,6 @@ import db from '@/firebase';
 import TYPES from '@/store/modules/smiles/types';
 import mutations from './mutations';
 
-export const types = {};
-
 const state = {
   smileys: [],
 };
