@@ -4,16 +4,24 @@ import 'vuetify/dist/vuetify.min.css';
 import firebase from 'firebase';
 import store from '@/store';
 import router from '@/router';
-import '@/firebase';
+import db from '@/firebase';
 import '@/registerServiceWorker';
 import App from './App.vue';
+
 
 Vue.config.productionTip = false;
 Vue.use(Vuetify);
 
 
 firebase.auth().onAuthStateChanged((user) => {
-  console.log(user);
+  db.collection('users')
+    .where('email', '==', user.email)
+    .get()
+    .then((d) => {
+      const doc = d.docs.pop();
+      store.commit('user/saveUser', doc);
+    });
+
 
   new Vue({
     router,
