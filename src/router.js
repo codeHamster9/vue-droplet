@@ -8,6 +8,7 @@ import Home from '@/views/Home.vue';
 import About from '@/views/About.vue';
 import PageNotFound from '@/views/404.vue';
 import Gifts from '@/views/Gifts.vue';
+import Kids from '@/views/Kids.vue';
 
 Vue.use(Router);
 const router = new Router({
@@ -60,6 +61,14 @@ const router = new Router({
       path: '/gifts',
       name: 'Gifts',
       component: Gifts,
+      meta: {
+        requiresAuth: true,
+      },
+    },
+    {
+      path: '/kids',
+      name: 'Kids',
+      component: Kids,
       meta: {
         requiresAuth: true,
       },

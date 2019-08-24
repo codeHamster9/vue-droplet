@@ -1,8 +1,11 @@
 /* eslint-disable no-param-reassign */
+import db from '@/firebase';
+
 export const types = {
   ACTIONS: {
     LOGIN: 'login',
     LOGOUT: 'logout',
+    FETCH: 'fetch',
   },
   MUTATIONS: {
     SAVE_USER: 'saveUser',
@@ -21,7 +24,20 @@ const state = {
 
 const initialState = { ...state };
 
-const actions = {};
+const actions = {
+  [types.ACTIONS.FETCH]: async ({ commit }, email) => {
+    try {
+      const query = await db.collection('users')
+        .where('email', '==', email)
+        .get();
+
+      const doc = query.docs.pop();
+      commit(types.MUTATIONS.SAVE_USER, doc);
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};
 
 const mutations = {
   [types.MUTATIONS.SAVE_USER]: (_state, payload) => {
