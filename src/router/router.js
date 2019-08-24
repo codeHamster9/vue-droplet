@@ -5,10 +5,10 @@ import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
 import SmileyCheck from '@/views/SmileyCheck.vue';
 import Home from '@/views/Home.vue';
-import About from '@/views/About.vue';
 import PageNotFound from '@/views/404.vue';
 import Gifts from '@/views/Gifts.vue';
 import Kids from '@/views/Kids.vue';
+import { routeNames } from '@/router/route-names';
 
 Vue.use(Router);
 const router = new Router({
@@ -19,31 +19,26 @@ const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
     },
     {
       path: '/404',
-      name: '404',
+      name: routeNames.PAGE_NOT_FOUND,
       component: PageNotFound,
     },
     {
       path: '/login',
-      name: 'Login',
+      name: routeNames.LOGIN,
       component: Login,
     },
     {
       path: '/sign-up',
-      name: 'SignUp',
+      name: routeNames.SIGNUP,
       component: SignUp,
     },
     {
-      path: '/about',
-      name: 'About',
-      component: About,
-    },
-    {
       path: '/',
-      name: 'home',
+      name: routeNames.HOME,
       component: Home,
       meta: {
         requiresAuth: true,
@@ -51,7 +46,7 @@ const router = new Router({
     },
     {
       path: '/smiley',
-      name: 'SmileyCheck',
+      name: routeNames.SMILES,
       component: SmileyCheck,
       meta: {
         requiresAuth: true,
@@ -59,7 +54,7 @@ const router = new Router({
     },
     {
       path: '/gifts',
-      name: 'Gifts',
+      name: routeNames.GIFTS,
       component: Gifts,
       meta: {
         requiresAuth: true,
@@ -67,7 +62,7 @@ const router = new Router({
     },
     {
       path: '/kids',
-      name: 'Kids',
+      name: routeNames.KIDS,
       component: Kids,
       meta: {
         requiresAuth: true,
