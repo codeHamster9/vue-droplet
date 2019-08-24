@@ -10,7 +10,11 @@ import App from './App.vue';
 
 
 Vue.config.productionTip = false;
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  options: {
+    customProperties: true,
+  },
+});
 
 
 firebase.auth().onAuthStateChanged(async (user) => {
