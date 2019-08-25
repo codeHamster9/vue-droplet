@@ -7,14 +7,22 @@ const state = {
 };
 
 const actions = {
-  async fetch({ commit }) {
+  async fetch({ commit, rootState }) {
+    const activeKidId = rootState.kids.activeKid;
+
     try {
-      const querySnapshot = await db.collection('smileys').get();
+      const querySnapshot = await db
+        .collection('smileys')
+        .where('kidId', '==', activeKidId)
+        .get();
 
       const payload = querySnapshot.docs.map((doc) => {
         const { date, color, kidId } = doc.data();
         return {
-          id: doc.id, date, color, kidId: kidId.id,
+          id: doc.id,
+          date,
+          color,
+          kidId,
         };
       });
 
@@ -23,13 +31,16 @@ const actions = {
       console.log(error);
     }
   },
-  async add(context, { color, date }) {
+  async add({ commit, rootState }, { color, date }) {
+    const activeKidId = rootState.kids.activeKid;
     try {
-      const docRef = await db.collection('smileys').add({ color, date, kidId: 'TKOwf1s1dz2vaqtTaBG6' });
+      const docRef = await db
+        .collection('smileys')
+        .add({ color, date, kidId: activeKidId });
 
-      context.commit(TYPES.MUTATIONS.ADD_ONE, {
+      commit(TYPES.MUTATIONS.ADD_ONE, {
         id: docRef.id,
-        kidId: 'TKOwf1s1dz2vaqtTaBG6',
+        kidId: activeKidId,
         color,
         date,
       });
