@@ -88,7 +88,12 @@ export default {
       {
         text: 'Gifts',
         url: '/gifts',
-        icon: 'gift',
+        icon: 'gif',
+      },
+      {
+        text: 'Kids',
+        url: '/kids',
+        icon: 'face',
       },
     ],
   }),
