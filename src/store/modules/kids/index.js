@@ -14,12 +14,14 @@ export const types = {
     UPDATE: 'update',
     SAVE: 'save',
     RESET: 'reset',
+    SET_ACTIVE: 'setActive',
   },
   GETTERS: {},
 };
 
 const state = {
   kids: [],
+  activeKid: null,
 };
 
 // const initialState = { ...state };
@@ -27,14 +29,18 @@ const state = {
 const actions = {
   async [types.ACTIONS.FETCH]({ commit }, userId) {
     try {
-      const querySnapshot = await db.collection('kids')
+      const querySnapshot = await db
+        .collection('kids')
         .where('userId', '==', userId)
         .get();
 
       const payload = querySnapshot.docs.map((doc) => {
         const { name, age, gender } = doc.data();
         return {
-          name, age, gender, id: doc.id,
+          name,
+          age,
+          gender,
+          id: doc.id,
         };
       });
 
@@ -53,7 +59,8 @@ const actions = {
   },
   [types.ACTIONS.DELETE]: async ({ commit }, payload) => {
     try {
-      await db.collection('kids')
+      await db
+        .collection('kids')
         .doc(payload.id)
         .delete();
       commit(types.MUTATIONS.REMOVE, payload);
@@ -72,6 +79,9 @@ const mutations = {
   },
   [types.MUTATIONS.REMOVE]: (_state, payload) => {
     _state.kids = _state.kids.filter(k => k.id !== payload.id);
+  },
+  [types.MUTATIONS.SET_ACTIVE]: (_state, payload) => {
+    _state.activeKid = payload;
   },
 };
 
