@@ -1,4 +1,5 @@
 export default {
+  NAME: 'smiles',
   ACTIONS: {
     FETCH: 'fetch',
     ADD: 'add',

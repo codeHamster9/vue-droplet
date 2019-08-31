@@ -63,6 +63,18 @@ export default {
       type: Boolean,
       default: false,
     },
+    kid: {
+      type: Object,
+    },
+  },
+  watch: {
+    show() {
+      if (this.kid) {
+        this.name = this.kid.name;
+        this.age = this.kid.age;
+        this.gender = this.kid.gender;
+      }
+    },
   },
   data() {
     return {
@@ -71,15 +83,17 @@ export default {
       name: null,
       age: null,
       gender: null,
-      genders: ['Male', 'Female'],
+      genders: ['male', 'female'],
     };
   },
   methods: {
     submit() {
-      this.$emit('submit', {
+      const eventName = this.kid.id ? 'edit' : 'create';
+      this.$emit(eventName, {
         name: this.name,
         age: this.age,
         gender: this.gender,
+        id: this.kid.id,
       });
       this.clear();
     },

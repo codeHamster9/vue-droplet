@@ -2,6 +2,7 @@
 import db from '@/firebase';
 
 export const types = {
+  NAME: 'kids',
   ACTIONS: {
     FETCH: 'fetch',
     CREATE: 'create',
@@ -68,6 +69,21 @@ const actions = {
       console.log(error);
     }
   },
+  [types.ACTIONS.UPDATE]: (context, payload) => {
+    try {
+      const {
+        name, age, gender, userId,
+      } = payload;
+      db.collection('kids')
+        .doc(payload.id)
+        .set({
+          name, age, gender, userId,
+        });
+      context.commit(types.MUTATIONS.UPDATE, payload);
+    } catch (e) {
+      console.log(e);
+    }
+  },
 };
 
 const mutations = {
@@ -82,6 +98,12 @@ const mutations = {
   },
   [types.MUTATIONS.SET_ACTIVE]: (_state, payload) => {
     _state.activeKid = payload;
+  },
+  [types.MUTATIONS.UPDATE]: ({ kids }, payload) => {
+    const kid = kids.find(s => s.id === payload.id);
+    kid.name = payload.name;
+    kid.age = payload.age;
+    kid.gender = payload.gender;
   },
 };
 
