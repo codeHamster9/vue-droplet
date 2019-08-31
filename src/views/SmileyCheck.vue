@@ -70,7 +70,7 @@ export default {
     this.fetch();
   },
   computed: {
-    ...mapState('smiles', { events: 'smileys' }),
+    ...mapState(SMILES.NAME, { events: 'smileys' }),
     eventsMap() {
       const map = {};
       this.events.forEach((e) => {
@@ -86,7 +86,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions('smiles', ['add', 'remove', 'update', 'fetch']),
+    ...mapActions(SMILES.NAME, [
+      SMILES.ACTIONS.ADD,
+      SMILES.ACTIONS.REMOVE,
+      SMILES.ACTIONS.UPDATE,
+      SMILES.ACTIONS.FETCH,
+    ]),
     onClick(data) {
       const cell = this.events.find(i => i.date === data.date);
       if (cell) {
