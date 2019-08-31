@@ -10,9 +10,6 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3",
     "firebase": "^6.4.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.6.10",
