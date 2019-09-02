@@ -55,13 +55,9 @@
       </v-layout>
     </v-toolbar>
     <v-content>
-      <v-container fill-height>
-        <v-layout justify-center
-                  align-center>
-          <v-flex md12>
-            <router-view></router-view>
-          </v-flex>
-        </v-layout>
+      <v-container fill-height
+                   fluid>
+        <router-view></router-view>
       </v-container>
     </v-content>
   </v-app>

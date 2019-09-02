@@ -1,74 +1,69 @@
 <template>
   <v-layout column>
-    <v-flex md6>
-      <v-layout row
-                wrap>
-        <v-flex xs12>
-          <v-card class="red--text">
+    <v-flex md11>
+      <v-card class="red--text">
 
-            <v-list three-line>
-              <template v-for="(kid, index) in kids">
-                <div :key="kid.name">
-                  <v-list-tile avatar
-                               ripple
-                               @click="selectedKid = kid">
-                    <v-list-tile-avatar>
-                      <img v-if="kid.avatar "
-                           :src="kid.avatar" />
-                      <v-icon v-else>face</v-icon>
-                    </v-list-tile-avatar>
+        <v-list three-line>
+          <template v-for="(kid, index) in kids">
+            <div :key="kid.name">
+              <v-list-tile avatar
+                           ripple
+                           @click="selectedKid = kid">
+                <v-list-tile-avatar>
+                  <img v-if="kid.avatar "
+                       :src="kid.avatar" />
+                  <v-icon v-else>face</v-icon>
+                </v-list-tile-avatar>
 
-                    <v-list-tile-content>
-                      <v-list-tile-title>{{ kid.name }} {{ (kid.age)}}</v-list-tile-title>
-                      <v-list-tile-sub-title v-html="kid.gender"></v-list-tile-sub-title>
-                    </v-list-tile-content>
-                    <v-list-tile-action v-if="selectedKid.id === kid.id">
-                      <v-layout row
-                                align-center
-                                justify-space-around>
-                        <v-btn flat
-                               icon
-                               color="primary"
-                               @click="editKid(kid)"
-                               class="px-4">
-                          <v-icon>edit</v-icon>
-                        </v-btn>
-                        <v-btn icon
-                               ripple
-                               @click="removeKid(kid)"
-                               class="px-4">
-                          <v-icon color="red">highlight_off</v-icon>
-                        </v-btn>
-                      </v-layout>
-                    </v-list-tile-action>
-                  </v-list-tile>
-                  <v-divider inset
-                             v-if="kids.length > 1 && index != kids.length -1"></v-divider>
-                </div>
-              </template>
-            </v-list>
-          </v-card>
-        </v-flex>
-      </v-layout>
+                <v-list-tile-content>
+                  <v-list-tile-title>{{ kid.name }} {{ (kid.age)}}</v-list-tile-title>
+                  <v-list-tile-sub-title v-html="kid.gender"></v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action v-if="selectedKid.id === kid.id">
+                  <v-layout row
+                            align-center
+                            justify-space-around>
+                    <v-btn flat
+                           icon
+                           color="primary"
+                           @click="editKid(kid)"
+                           class="px-4">
+                      <v-icon>edit</v-icon>
+                    </v-btn>
+                    <v-btn icon
+                           ripple
+                           @click="removeKid(kid)"
+                           class="px-4">
+                      <v-icon color="red">highlight_off</v-icon>
+                    </v-btn>
+                  </v-layout>
+                </v-list-tile-action>
+              </v-list-tile>
+              <v-divider inset
+                         v-if="kids.length > 1 && index != kids.length -1">
+              </v-divider>
+            </div>
+          </template>
+        </v-list>
+      </v-card>
     </v-flex>
-    <v-flex xs1>
-      <add-kid-dialog :show="showDialog"
-                      :kid="selectedKid"
-                      @create="onCreate"
-                      @edit="onEdit"
-                      @close="showDialog = false"></add-kid-dialog>
+    <v-flex md1
+            text-lg-right>
       <v-fab-transition>
         <v-btn color="green"
                dark
-               absolute
-               bottom
-               right
                fab
                @click="addKid">
           <v-icon>add</v-icon>
         </v-btn>
       </v-fab-transition>
     </v-flex>
+    <add-kid-dialog :show="showDialog"
+                    :kid="selectedKid"
+                    @create="onCreate"
+                    @edit="onEdit"
+                    @close="showDialog = false">
+    </add-kid-dialog>
   </v-layout>
 </template>
 
