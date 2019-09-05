@@ -1,17 +1,27 @@
 <template>
-  <v-container fluid
-               grid-list-lg>
-    <v-layout row
-              justify-center>
-      <v-dialog :value="true"
-                hide-overlay
-                persistent
-                max-width="290">
+  <v-container
+    fluid
+    grid-list-lg
+  >
+    <v-layout
+      row
+      justify-center
+    >
+      <v-dialog
+        :value="true"
+        hide-overlay
+        persistent
+        max-width="290"
+      >
         <v-card>
-          <v-card-title class="headline">Login</v-card-title>
+          <v-card-title class="headline">
+            Login
+          </v-card-title>
           <v-card-text>
-            <simple-form @submit="signIn"
-                         :error-text="msg"></simple-form>
+            <simple-form
+              :error-text="msg"
+              @submit="signIn"
+            />
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -24,7 +34,7 @@ import firebase from 'firebase';
 import SimpleForm from './SimpleForm.vue';
 
 export default {
-  name: 'login',
+  name: 'Login',
   components: {
     SimpleForm,
   },

@@ -1,60 +1,82 @@
 <template>
   <v-layout wrap>
-    <v-layout align-center
-              justify-space-between
-              my-5
-              px-1>
-      <div class="display-1">Good Smile: {{ goodSmileCount }} </div>
-      <div class="display-1">Bad Smile: {{ badSmileCount }} </div>
+    <v-layout
+      align-center
+      justify-space-between
+      my-5
+      px-1
+    >
+      <div class="display-1">
+        Good Smile: {{ goodSmileCount }}
+      </div>
+      <div class="display-1">
+        Bad Smile: {{ badSmileCount }}
+      </div>
     </v-layout>
-    <v-flex xs12
-            class="mb-3">
+    <v-flex
+      xs12
+      class="mb-3"
+    >
       <v-sheet height="500">
-        <v-calendar ref="calendar"
-                    v-model="start"
-                    :type="type"
-                    color="success"
-                    @click:day="onClick">
+        <v-calendar
+          ref="calendar"
+          v-model="start"
+          :type="type"
+          color="success"
+          @click:day="onClick"
+        >
           <template v-slot:day="{ date }">
             <div>
-              <v-icon v-if="eventsMap[date]"
-                      :color="eventsMap[date].color"
-                      class="darken-1"
-                      large>face
+              <v-icon
+                v-if="eventsMap[date]"
+                :color="eventsMap[date].color"
+                class="darken-1"
+                large
+              >
+                face
               </v-icon>
             </div>
           </template>
-
         </v-calendar>
       </v-sheet>
     </v-flex>
     <v-layout justify-space-between>
       <v-flex>
-        <v-btn color="info"
-               depressed
-               @click="$refs.calendar.prev()">
-          <v-icon dark
-                  left> keyboard_arrow_left
+        <v-btn
+          color="info"
+          depressed
+          @click="$refs.calendar.prev()"
+        >
+          <v-icon
+            dark
+            left
+          >
+            keyboard_arrow_left
           </v-icon>
           Prev
         </v-btn>
       </v-flex>
-      <v-flex sm4
-              xs12
-              class="text-sm-right text-xs-center">
-        <v-btn color="info"
-               depressed
-               @click="$refs.calendar.next()">
+      <v-flex
+        sm4
+        xs12
+        class="text-sm-right text-xs-center"
+      >
+        <v-btn
+          color="info"
+          depressed
+          @click="$refs.calendar.next()"
+        >
           Next
-          <v-icon right
-                  dark>
+          <v-icon
+            right
+            dark
+          >
             keyboard_arrow_right
           </v-icon>
         </v-btn>
       </v-flex>
     </v-layout>
   </v-layout>
-
 </template>
 
 <script>
@@ -66,9 +88,6 @@ export default {
     type: 'month',
     start: Date.now().toString(),
   }),
-  mounted() {
-    this.fetch();
-  },
   computed: {
     ...mapState(SMILES.NAME, { events: 'smileys' }),
     eventsMap() {
@@ -84,6 +103,9 @@ export default {
     badSmileCount() {
       return this.events.filter(e => e.color === 'orange accent-2').length;
     },
+  },
+  mounted() {
+    this.fetch();
   },
   methods: {
     ...mapActions(SMILES.NAME, [

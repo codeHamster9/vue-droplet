@@ -1,52 +1,66 @@
 <template>
-  <v-dialog :value="show"
-            persistent
-            max-width="600px">
-
+  <v-dialog
+    :value="show"
+    persistent
+    max-width="600px"
+  >
     <v-card>
       <v-card-title class="grey lighten-3">
         <span class="headline">Add New Kid</span>
       </v-card-title>
       <v-card-text class="pa-3">
-        <v-form ref="form"
-                v-model="valid"
-                lazy-validation
-                class="pa-4">
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+          class="pa-4"
+        >
+          <v-text-field
+            v-model="name"
+            name="user"
+            label="Name"
+          />
+          <v-text-field
+            v-model="age"
+            name="age"
+            label="Age"
+          />
+          <v-select
+            v-model="gender"
+            :items="genders"
+            box
+            label="Gender"
+          />
 
-          <v-text-field v-model="name"
-                        name="user"
-                        label="Name">
-          </v-text-field>
-          <v-text-field v-model="age"
-                        name="age"
-                        label="Age">
-          </v-text-field>
-          <v-select v-model="gender"
-                    :items="genders"
-                    box
-                    label="Gender">
-          </v-select>
-
-          <v-textarea v-if="errorText"
-                      outline
-                      label="errors"
-                      auto-grow
-                      box
-                      color="error"
-                      background-color="error"
-                      rows="1"
-                      :value="errorText">
-          </v-textarea>
+          <v-textarea
+            v-if="errorText"
+            outline
+            label="errors"
+            auto-grow
+            box
+            color="error"
+            background-color="error"
+            rows="1"
+            :value="errorText"
+          />
         </v-form>
       </v-card-text>
       <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1"
-               flat
-               @click="close">Close</v-btn>
-        <v-btn color="blue darken-1"
-               flat
-               @click="submit">Save</v-btn>
+        <v-spacer />
+        <v-btn
+          color="blue darken-1"
+          flat
+          @click="close"
+        >
+          Close
+        </v-btn>
+        <v-btn
+          color="blue darken-1"
+          flat
+          @click="submit"
+        >
+          Save
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -55,22 +69,17 @@
 <script>
 export default {
   props: {
-    errorText: String,
+    errorText: {
+      type: String,
+      default: '',
+    },
     show: {
       type: Boolean,
       default: false,
     },
     kid: {
       type: Object,
-    },
-  },
-  watch: {
-    show() {
-      if (this.kid) {
-        this.name = this.kid.name;
-        this.age = this.kid.age;
-        this.gender = this.kid.gender;
-      }
+      default: () => ({}),
     },
   },
   data() {
@@ -82,6 +91,15 @@ export default {
       gender: null,
       genders: ['male', 'female'],
     };
+  },
+  watch: {
+    show() {
+      if (this.kid) {
+        this.name = this.kid.name;
+        this.age = this.kid.age;
+        this.gender = this.kid.gender;
+      }
+    },
   },
   methods: {
     submit() {

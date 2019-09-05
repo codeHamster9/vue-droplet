@@ -2,68 +2,91 @@
   <v-layout column>
     <v-flex md11>
       <v-card class="red--text">
-
         <v-list three-line>
           <template v-for="(kid, index) in kids">
             <div :key="kid.name">
-              <v-list-tile avatar
-                           ripple
-                           @click="selectedKid = kid">
+              <v-list-tile
+                avatar
+                ripple
+                @click="selectedKid = kid"
+              >
                 <v-list-tile-avatar>
-                  <img v-if="kid.avatar "
-                       :src="kid.avatar" />
-                  <v-icon v-else>face</v-icon>
+                  <img
+                    v-if="kid.avatar"
+                    :src="kid.avatar"
+                  >
+                  <v-icon v-else>
+                    face
+                  </v-icon>
                 </v-list-tile-avatar>
 
                 <v-list-tile-content>
-                  <v-list-tile-title>{{ kid.name }} {{ (kid.age)}}</v-list-tile-title>
-                  <v-list-tile-sub-title v-html="kid.gender"></v-list-tile-sub-title>
+                  <v-list-tile-title>
+                    {{ kid.name }} {{ kid.age }}
+                  </v-list-tile-title>
+                  <v-list-tile-sub-title>
+                    {{ kid.gender }}
+                  </v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action v-if="selectedKid.id === kid.id">
-                  <v-layout row
-                            align-center
-                            justify-space-around>
-                    <v-btn flat
-                           icon
-                           color="primary"
-                           @click="editKid(kid)"
-                           class="px-4">
+                  <v-layout
+                    row
+                    align-center
+                    justify-space-around
+                  >
+                    <v-btn
+                      flat
+                      icon
+                      color="primary"
+                      class="px-4"
+                      @click="editKid(kid)"
+                    >
                       <v-icon>edit</v-icon>
                     </v-btn>
-                    <v-btn icon
-                           ripple
-                           @click="removeKid(kid)"
-                           class="px-4">
-                      <v-icon color="red">highlight_off</v-icon>
+                    <v-btn
+                      icon
+                      ripple
+                      class="px-4"
+                      @click="removeKid(kid)"
+                    >
+                      <v-icon color="red">
+                        highlight_off
+                      </v-icon>
                     </v-btn>
                   </v-layout>
                 </v-list-tile-action>
               </v-list-tile>
-              <v-divider inset
-                         v-if="kids.length > 1 && index != kids.length -1">
-              </v-divider>
+              <v-divider
+                v-if="kids.length > 1 && index != kids.length - 1"
+                inset
+              />
             </div>
           </template>
         </v-list>
       </v-card>
     </v-flex>
-    <v-flex md1
-            text-lg-right>
+    <v-flex
+      md1
+      text-lg-right
+    >
       <v-fab-transition>
-        <v-btn color="green"
-               dark
-               fab
-               @click="addKid">
+        <v-btn
+          color="primary"
+          dark
+          fab
+          @click="addKid"
+        >
           <v-icon>add</v-icon>
         </v-btn>
       </v-fab-transition>
     </v-flex>
-    <add-kid-dialog :show="showDialog"
-                    :kid="selectedKid"
-                    @create="onCreate"
-                    @edit="onEdit"
-                    @close="showDialog = false">
-    </add-kid-dialog>
+    <add-kid-dialog
+      :show="showDialog"
+      :kid="selectedKid"
+      @create="onCreate"
+      @edit="onEdit"
+      @close="showDialog = false"
+    />
   </v-layout>
 </template>
 
@@ -73,12 +96,9 @@ import { types as KIDS } from '@/store/modules/kids';
 import AddKidDialog from '@/components/AddKidDialog.vue';
 
 export default {
-  name: 'kids',
+  name: 'Kids',
   components: {
     AddKidDialog,
-  },
-  mounted() {
-    this.fetch(this.userId);
   },
   data() {
     return {
@@ -96,6 +116,9 @@ export default {
       userId: state => Number(state.userId),
     }),
     ...mapState('kids', ['kids']),
+  },
+  mounted() {
+    this.fetch(this.userId);
   },
   methods: {
     addKid() {

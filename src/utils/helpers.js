@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable func-names */
-import { createActionHelpers } from 'vuex-loading';
+import { createActionHelpers } from 'vue-wait';
 
 const tagsToReplace = {
   '&': '&amp;',
@@ -52,9 +52,8 @@ export const highlightMatch = function (text, searchValue) {
 // until we get a lib like lodash etc..
 export const debounce = function (func, wait, immediate) {
   let timeout;
-  return function () {
+  return function (...args) {
     const context = this;
-    const args = arguments;
     const later = function () {
       timeout = null;
       if (!immediate) func.apply(context, args);

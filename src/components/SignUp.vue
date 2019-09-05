@@ -1,11 +1,21 @@
 <template>
   <div class="sign-up">
     <p>Let's create a new account !</p>
-    <input type="text" v-model="email" placeholder="Email">
+    <input
+      v-model="email"
+      type="text"
+      placeholder="Email"
+    >
     <br>
-    <input type="password" v-model="password" placeholder="Password">
+    <input
+      v-model="password"
+      type="password"
+      placeholder="Password"
+    >
     <br>
-    <button v-on:click="signUp">Sign Up</button>
+    <button @click="signUp">
+      Sign Up
+    </button>
     <span>or go back to
       <router-link to="/login">login</router-link>.
     </span>
@@ -16,7 +26,7 @@
 import firebase from 'firebase';
 
 export default {
-  name: 'signUp',
+  name: 'SignUp',
   data() {
     return {
       email: '',
@@ -26,7 +36,7 @@ export default {
   methods: {
     signUp() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        (user) => {
+        () => {
           this.$router.replace('home');
         },
         (err) => {
