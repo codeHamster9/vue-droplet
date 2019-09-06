@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app dark>
     <v-navigation-drawer
       v-model="drawer"
       fixed
@@ -75,6 +75,7 @@
       <v-container
         fill-height
         fluid
+        dark
       >
         <router-view />
       </v-container>

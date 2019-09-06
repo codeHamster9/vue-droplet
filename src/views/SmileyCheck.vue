@@ -40,8 +40,11 @@
         </v-calendar>
       </v-sheet>
     </v-flex>
-    <v-layout justify-space-between>
-      <v-flex>
+    <v-layout
+      justify-space-between
+      align-center
+    >
+      <v-flex sm4>
         <v-btn
           color="info"
           depressed
@@ -55,6 +58,11 @@
           </v-icon>
           Prev
         </v-btn>
+      </v-flex>
+      <v-flex sm4>
+        <div class="title text-xs-center">
+          {{ currentMonth | dateFormat('MMMM') }}
+        </div>
       </v-flex>
       <v-flex
         sm4
@@ -86,7 +94,7 @@ import SMILES from '@/store/modules/smiles/types';
 export default {
   data: () => ({
     type: 'month',
-    start: Date.now().toString(),
+    start: new Date().toString(),
   }),
   computed: {
     ...mapState(SMILES.NAME, { events: 'smileys' }),
@@ -102,6 +110,9 @@ export default {
     },
     badSmileCount() {
       return this.events.filter(e => e.color === 'orange accent-2').length;
+    },
+    currentMonth() {
+      return new Date(this.start.toString());
     },
   },
   mounted() {
