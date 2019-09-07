@@ -11,21 +11,28 @@
         <v-subheader class="mt-3 grey--text text--darken-1">
           ROUTES
         </v-subheader>
-        <v-list-tile
+        <router-link
           v-for="item in items"
           :key="item.text"
-          ripple
-          @click="navigate(item)"
+          v-slot="{ href, route, navigate, isActive, isExactActive }"
+          :to="item.url"
         >
-          <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>
-              {{ item.text }}
-            </v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
+          <v-list-tile
+            ripple
+            :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+            @click="navigate"
+          >
+            <v-list-tile-action>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-tile-action>
+
+            <v-list-tile-content>
+              <v-list-tile-title>
+                {{ item.text }}
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
@@ -114,9 +121,6 @@ export default {
     ],
   }),
   methods: {
-    navigate(item) {
-      this.$router.push(item.url);
-    },
     logout() {
       firebase
         .auth()
@@ -128,3 +132,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.router-link-exact-active {
+  background-color: lightblue;
+}
+</style>
