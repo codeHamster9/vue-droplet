@@ -20,11 +20,15 @@ Vue.use(Vuetify, {
 
 
 firebase.auth().onAuthStateChanged(async (user) => {
-  await store.dispatch('user/fetch', user.email);
-
-  new Vue({
-    router,
-    store,
-    render: h => h(App),
-  }).$mount('#app');
+  try {
+    await store.dispatch('user/fetch', user.email || 'idansagi@gmail.com');
+  } catch (error) {
+    console.log(error);
+  } finally {
+    new Vue({
+      router,
+      store,
+      render: h => h(App),
+    }).$mount('#app');
+  }
 });
