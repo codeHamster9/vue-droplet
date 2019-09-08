@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 import VueFilterDateFormat from 'vue-filter-date-format';
 import VueWait from 'vue-wait';
 import firebase from 'firebase';
@@ -17,6 +18,9 @@ Vue.config.productionTip = false;
 Vue.use(Vuetify, {
   options: {
     customProperties: true,
+  },
+  icons: {
+    iconfont: 'fa',
   },
 });
 

@@ -44,10 +44,10 @@
     >
       <v-toolbar-side-icon @click.stop="drawer=!drawer" />
       <v-icon class="mx-3">
-        fab fa-youtube
+        fa-robot
       </v-icon>
       <v-toolbar-title class="mr-5 align-center">
-        <span class="title">Portal</span>
+        <span class="title">Kids Smile Tracker</span>
       </v-toolbar-title>
       <v-spacer />
       <v-layout
