@@ -7,10 +7,10 @@ const state = {
 };
 
 const actions = {
-  async fetch({ commit, rootState }) {
+  async fetch({ commit, rootState, dispatch }) {
     const activeKidId = rootState.kids.activeKid;
-
     try {
+      dispatch('wait/start', 'smiles.fetch', { root: true });
       const querySnapshot = await db
         .collection('smileys')
         .where('kidId', '==', activeKidId)
@@ -29,6 +29,8 @@ const actions = {
       commit(TYPES.MUTATIONS.ADD_ALL, payload);
     } catch (error) {
       console.log(error);
+    } finally {
+      dispatch('wait/end', 'smiles.fetch', { root: true });
     }
   },
   async add({ commit, rootState }, { color, date }) {

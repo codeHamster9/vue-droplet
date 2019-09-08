@@ -14,12 +14,12 @@
         <router-link
           v-for="item in items"
           :key="item.text"
-          v-slot="{ href, route, navigate, isActive, isExactActive }"
+          v-slot="{ href, route, navigate, isExactActive }"
           :to="item.url"
         >
           <v-list-tile
             ripple
-            :class="[isActive && 'router-link-active', isExactActive && 'router-link-exact-active']"
+            :class="[isExactActive && 'router-link-exact-active']"
             @click="navigate"
           >
             <v-list-tile-action>
@@ -79,10 +79,25 @@
       </v-layout>
     </v-toolbar>
     <v-content>
+      <v-layout
+        v-if="$wait.any"
+        row
+        wrap
+        fill-height
+        align-center
+        justify-center
+        class="indigo lighten-5"
+      >
+        <v-progress-circular
+          :size="70"
+          :width="7"
+          indeterminate
+          color="blue darken-2"
+        />
+      </v-layout>
       <v-container
         fill-height
         fluid
-        dark
       >
         <router-view />
       </v-container>
@@ -111,7 +126,7 @@ export default {
       {
         text: 'Gifts',
         url: '/gifts',
-        icon: 'gif',
+        icon: 'fas fa-gifts',
       },
       {
         text: 'Kids',

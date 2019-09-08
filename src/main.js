@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuetify from 'vuetify';
 import 'vuetify/dist/vuetify.min.css';
 import VueFilterDateFormat from 'vue-filter-date-format';
+import VueWait from 'vue-wait';
 import firebase from 'firebase';
 import store from '@/store';
 import router from '@/router';
@@ -9,6 +10,7 @@ import '@/registerServiceWorker';
 import App from './App.vue';
 
 Vue.use(VueFilterDateFormat);
+Vue.use(VueWait);
 
 Vue.config.productionTip = false;
 
@@ -28,6 +30,7 @@ firebase.auth().onAuthStateChanged(async (user) => {
     new Vue({
       router,
       store,
+      wait: new VueWait({ useVuex: true }),
       render: h => h(App),
     }).$mount('#app');
   }
