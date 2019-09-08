@@ -17,11 +17,11 @@ const actions = {
         .get();
 
       const payload = querySnapshot.docs.map((doc) => {
-        const { date, color, kidId } = doc.data();
+        const { date, value, kidId } = doc.data();
         return {
           id: doc.id,
           date,
-          color,
+          value,
           kidId,
         };
       });
@@ -33,47 +33,49 @@ const actions = {
       dispatch('wait/end', 'smiles.fetch', { root: true });
     }
   },
-  async add({ commit, rootState }, { color, date }) {
+  async add({ commit, rootState }, { value, date }) {
     const activeKidId = rootState.kids.activeKid;
     try {
       const docRef = await db
         .collection('smileys')
-        .add({ color, date, kidId: activeKidId });
+        .add({ value, date, kidId: activeKidId });
 
       commit(TYPES.MUTATIONS.ADD_ONE, {
         id: docRef.id,
         kidId: activeKidId,
-        color,
+        value,
         date,
       });
     } catch (error) {
       console.error('Error adding document: ', error);
     }
   },
-  update(context, payload) {
+  update({ rootState, commit }, payload) {
+    const activeKidId = rootState.kids.activeKid;
     try {
       db.collection('smileys')
         .doc(payload.id)
         .set({
-          color: 'orange accent-2',
+          kidId: activeKidId,
+          value: payload.value,
           date: payload.date,
         });
-      context.commit(TYPES.MUTATIONS.UPDATE, payload);
+      commit(TYPES.MUTATIONS.UPDATE, payload);
     } catch (error) {
-      context.commit(TYPES.MUTATIONS.UPDATE, {
+      commit(TYPES.MUTATIONS.UPDATE, {
         ...payload,
-        color: 'yellow darken-1',
+        value: 1,
       });
     }
   },
-  remove(context, payload) {
+  remove({ commit }, payload) {
     try {
       db.collection('smileys')
         .doc(payload.id)
         .delete();
-      context.commit(TYPES.MUTATIONS.REMOVE_ONE, payload);
+      commit(TYPES.MUTATIONS.REMOVE_ONE, payload);
     } catch (error) {
-      context.commit(TYPES.MUTATIONS.ADD_ONE, payload);
+      commit(TYPES.MUTATIONS.ADD_ONE, payload);
     }
   },
 };

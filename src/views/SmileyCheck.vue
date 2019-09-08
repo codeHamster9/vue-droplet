@@ -7,10 +7,7 @@
       px-1
     >
       <div class="display-1">
-        Good Smile: {{ goodSmileCount }}
-      </div>
-      <div class="display-1">
-        Bad Smile: {{ badSmileCount }}
+        Smile Counter: {{ smileCount }}
       </div>
     </v-layout>
     <v-flex
@@ -29,11 +26,11 @@
             <div>
               <v-icon
                 v-if="eventsMap[date]"
-                :color="eventsMap[date].color"
+                :color="eventsMap[date].value ? 'yellow darken-1' : 'orange accent-2' "
                 class="darken-1"
                 large
               >
-                face
+                {{ eventsMap[date].value ? 'fa-smile-beam' : 'fa-sad-tear' }}
               </v-icon>
             </div>
           </template>
@@ -105,11 +102,8 @@ export default {
       });
       return map;
     },
-    goodSmileCount() {
-      return this.events.filter(e => e.color === 'yellow darken-1').length;
-    },
-    badSmileCount() {
-      return this.events.filter(e => e.color === 'orange accent-2').length;
+    smileCount() {
+      return this.events.reduce((result, current) => result + current.value, 0);
     },
     currentMonth() {
       return new Date(this.start.toString());
@@ -128,13 +122,13 @@ export default {
     onClick(data) {
       const cell = this.events.find(i => i.date === data.date);
       if (cell) {
-        if (cell.color === 'orange accent-2') {
+        if (!cell.value) {
           this.remove(cell);
         } else {
-          this.update(cell);
+          this.update({ ...cell, value: 0 });
         }
       } else {
-        this.add({ ...data, color: 'yellow darken-1' });
+        this.add({ ...data, value: 1 });
       }
     },
   },

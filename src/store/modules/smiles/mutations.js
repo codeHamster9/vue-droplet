@@ -13,6 +13,6 @@ export default {
   },
   [TYPES.MUTATIONS.UPDATE]: ({ smileys }, payload) => {
     const smile = smileys.find(s => s.id === payload.id);
-    smile.color = 'orange accent-2';
+    smile.value = payload.value;
   },
 };
