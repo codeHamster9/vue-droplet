@@ -21,6 +21,7 @@
               slot-scope="{ active, toggle}"
               width="200"
               height="200"
+              class="ma-5"
             >
               <v-layout
                 column
