@@ -1,6 +1,7 @@
 <template>
   <v-layout wrap>
     <v-layout
+      column
       align-center
       justify-space-between
       my-5
@@ -9,8 +10,17 @@
       <div class="display-1">
         Smile Counter: {{ smileCount }}
       </div>
+      <v-flex sm4>
+        <div class="title text-xs-center">
+          {{ currentMonth | dateFormat('MMMM') }}
+        </div>
+      </v-flex>
     </v-layout>
     <v-flex
+      v-touch="{
+        left: () => $refs.calendar.prev(),
+        right: () => $refs.calendar.next()
+      }"
       xs12
       class="mb-3"
     >
@@ -38,6 +48,7 @@
       </v-sheet>
     </v-flex>
     <v-layout
+      v-if="$vuetify.breakpoint.mdAndUp"
       justify-space-between
       align-center
     >
@@ -56,11 +67,7 @@
           Prev
         </v-btn>
       </v-flex>
-      <v-flex sm4>
-        <div class="title text-xs-center">
-          {{ currentMonth | dateFormat('MMMM') }}
-        </div>
-      </v-flex>
+
       <v-flex
         sm4
         xs12
