@@ -1,6 +1,6 @@
 {
-  "name": "vuetoo",
-  "short_name": "vuetoo",
+  "name": "smileTracker",
+  "short_name": "smileTracker",
   "icons": [
     {
       "src": "/img/icons/android-chrome-192x192.png",
