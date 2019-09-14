@@ -40,7 +40,7 @@
                 class="darken-1"
                 large
               >
-                {{ eventsMap[date].value ? 'fa-smile-beam' : 'fa-sad-tear' }}
+                {{ iconLogic(eventsMap[date]) }}
               </v-icon>
             </div>
           </template>
@@ -118,6 +118,7 @@ export default {
     currentMonth() {
       return new Date(this.start.toString());
     },
+
   },
   mounted() {
     this.fetch();
@@ -137,6 +138,12 @@ export default {
       } else {
         this.add({ ...data, value: 1 });
       }
+    },
+    iconLogic(e) {
+      if (e.status === SMILE_STATUS.CLAIMED && e.value === 1) {
+        return 'fa-laugh-wink';
+      }
+      return e.value ? 'fa-smile-beam' : 'fa-sad-tear';
     },
   },
 };
