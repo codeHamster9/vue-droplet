@@ -11,8 +11,8 @@ export default {
   [TYPES.MUTATIONS.REMOVE_ONE]: (state, payload) => {
     state.smileys = state.smileys.filter(i => i.date !== payload.date);
   },
-  [TYPES.MUTATIONS.UPDATE]: ({ smileys }, payload) => {
-    const smile = smileys.find(s => s.id === payload.id);
-    smile.value = payload.value;
+  [TYPES.MUTATIONS.UPDATE]: ({ smileys }, { value, id }) => {
+    const smile = smileys.find(s => s.id === id);
+    smile.value = value;
   },
 };

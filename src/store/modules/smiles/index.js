@@ -7,7 +7,7 @@ const state = {
 };
 
 const actions = {
-  async fetch({ commit, rootState, dispatch }) {
+  [TYPES.ACTIONS.FETCH]: async ({ commit, rootState, dispatch }) => {
     const activeKidId = rootState.kids.activeKid;
     try {
       dispatch('wait/start', 'smiles.fetch', { root: true });
@@ -17,12 +17,19 @@ const actions = {
         .get();
 
       const payload = querySnapshot.docs.map((doc) => {
-        const { date, value, kidId } = doc.data();
+        const {
+          date,
+          value,
+          kidId,
+          status,
+        } = doc.data();
+
         return {
           id: doc.id,
           date,
           value,
           kidId,
+          status,
         };
       });
 
@@ -33,49 +40,45 @@ const actions = {
       dispatch('wait/end', 'smiles.fetch', { root: true });
     }
   },
-  async add({ commit, rootState }, { value, date }) {
+  [TYPES.ACTIONS.ADD]: async ({ commit, rootState }, { value, date }) => {
     const activeKidId = rootState.kids.activeKid;
     try {
-      const docRef = await db
-        .collection('smileys')
-        .add({ value, date, kidId: activeKidId });
-
-      commit(TYPES.MUTATIONS.ADD_ONE, {
-        id: docRef.id,
-        kidId: activeKidId,
+      const newSmile = {
         value,
         date,
-      });
+        kidId: activeKidId,
+        status: 'unclaimed',
+      };
+
+      const docRef = await db
+        .collection('smileys')
+        .add(newSmile);
+
+      commit(TYPES.MUTATIONS.ADD_ONE, { id: docRef.id, ...newSmile });
     } catch (error) {
       console.error('Error adding document: ', error);
     }
   },
-  update({ rootState, commit }, payload) {
-    const activeKidId = rootState.kids.activeKid;
+  [TYPES.ACTIONS.UPDATE]: async ({ commit }, { value, id }) => {
     try {
-      db.collection('smileys')
-        .doc(payload.id)
-        .set({
-          kidId: activeKidId,
-          value: payload.value,
-          date: payload.date,
-        });
-      commit(TYPES.MUTATIONS.UPDATE, payload);
+      await db.collection('smileys')
+        .doc(id)
+        .update({ value });
+      commit(TYPES.MUTATIONS.UPDATE, { value, id });
     } catch (error) {
-      commit(TYPES.MUTATIONS.UPDATE, {
-        ...payload,
-        value: 1,
-      });
+      // commit(TYPES.MUTATIONS.UPDATE, { value: 1, id });
+      console.error(error);
     }
   },
-  remove({ commit }, payload) {
+  [TYPES.ACTIONS.REMOVE]: async ({ commit }, payload) => {
     try {
-      db.collection('smileys')
+      await db.collection('smileys')
         .doc(payload.id)
         .delete();
       commit(TYPES.MUTATIONS.REMOVE_ONE, payload);
     } catch (error) {
-      commit(TYPES.MUTATIONS.ADD_ONE, payload);
+      // commit(TYPES.MUTATIONS.ADD_ONE, payload);
+      console.error(error);
     }
   },
 };
