@@ -131,7 +131,7 @@ export default {
     ]),
     onClick(data) {
       const cell = this.events.find(i => i.date === data.date);
-      if (!cell) {
+      if (cell) {
         if (!cell.value) this.remove(cell);
         else this.update({ ...cell, value: 0 });
       } else {
