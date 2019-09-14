@@ -94,6 +94,7 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 import SMILES from '@/store/modules/smiles/types';
+import { SMILE_STATUS } from '@/utils/constants';
 
 export default {
   data: () => ({
@@ -110,7 +111,9 @@ export default {
       return map;
     },
     smileCount() {
-      return this.events.reduce((result, current) => result + current.value, 0);
+      return this.events
+        .filter(s => s.status === SMILE_STATUS.UNCLAIMED)
+        .reduce((result, current) => result + current.value, 0);
     },
     currentMonth() {
       return new Date(this.start.toString());
@@ -128,12 +131,9 @@ export default {
     ]),
     onClick(data) {
       const cell = this.events.find(i => i.date === data.date);
-      if (cell) {
-        if (!cell.value) {
-          this.remove(cell);
-        } else {
-          this.update({ ...cell, value: 0 });
-        }
+      if (!cell) {
+        if (!cell.value) this.remove(cell);
+        else this.update({ ...cell, value: 0 });
       } else {
         this.add({ ...data, value: 1 });
       }
@@ -141,4 +141,3 @@ export default {
   },
 };
 </script>
-
