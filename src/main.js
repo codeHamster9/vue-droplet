@@ -4,7 +4,7 @@ import 'vuetify/dist/vuetify.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import VueFilterDateFormat from 'vue-filter-date-format';
 import VueWait from 'vue-wait';
-import firebase from 'firebase';
+import firebase from '@/firebase';
 import store from '@/store';
 import router from '@/router';
 import '@/registerServiceWorker';

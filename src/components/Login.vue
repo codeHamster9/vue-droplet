@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import firebase from 'firebase';
+import firebase from '@/firebase';
 import SimpleForm from './SimpleForm.vue';
 
 export default {

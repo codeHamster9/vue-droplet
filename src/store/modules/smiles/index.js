@@ -1,4 +1,4 @@
-import db from '@/firebase';
+import { db } from '@/firebase';
 import TYPES from '@/store/modules/smiles/types';
 import mutations from './mutations';
 

@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import db from '@/firebase';
+import { db } from '@/firebase';
 
 export const types = {
   NAME: 'kids',
