@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import firebase from '@/firebase';
 import Router from 'vue-router';
 import SignUp from '@/components/SignUp.vue';
 import Login from '@/components/Login.vue';
@@ -8,7 +7,10 @@ import Home from '@/views/Home.vue';
 import PageNotFound from '@/views/404.vue';
 import Gifts from '@/views/Gifts.vue';
 import Kids from '@/views/Kids.vue';
+import store from '@/store';
+import firebase from '@/firebase';
 import { routeNames } from '@/router/route-names';
+import { isDebug } from '@/utils/helpers';
 
 Vue.use(Router);
 const router = new Router({
@@ -72,13 +74,29 @@ const router = new Router({
 });
 
 router.beforeEach((to, from, next) => {
+  if (isDebug) {
+    console.log(` checkAuth::Hook - to:${to.name} from:${from.name}`);
+  }
   const { currentUser } = firebase.auth();
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('login');
-  else if (!requiresAuth && currentUser) next('home');
+  if (requiresAuth && !currentUser) next({ name: routeNames.LOGIN });
+
   else next();
+});
+
+router.beforeEach((to, from, next) => {
+  if (isDebug) {
+    console.log(` checkActiveKid::Hook - to:${to.name} from:${from.name}`);
+  }
+
+  if (to.name === routeNames.HOME) next();
+
+  const { activeKid } = store.state.kids;
+  if (!activeKid) {
+    next({ name: routeNames.HOME });
+  } else next();
 });
 
 export default router;

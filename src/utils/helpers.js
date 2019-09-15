@@ -69,9 +69,9 @@ export const isDebug = process.env.NODE_ENV !== 'production';
 
 export const API_PREFIX = `${window.location.origin}/api`;
 
-export const { startLoading, endLoading } = createActionHelpers({
-  moduleName: 'loading',
-});
+// export const { startLoading, endLoading } = createActionHelpers({
+//   moduleName: 'loading',
+// });
 
 /**
  *  maps the given filters as componment methods
