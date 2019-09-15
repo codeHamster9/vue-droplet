@@ -86,17 +86,4 @@ router.beforeEach((to, from, next) => {
   else next();
 });
 
-router.beforeEach((to, from, next) => {
-  if (isDebug) {
-    console.log(` checkActiveKid::Hook - to:${to.name} from:${from.name}`);
-  }
-
-  if (to.name === routeNames.HOME) next();
-
-  const { activeKid } = store.state.kids;
-  if (!activeKid) {
-    next({ name: routeNames.HOME });
-  } else next();
-});
-
 export default router;
