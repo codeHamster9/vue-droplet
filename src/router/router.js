@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import Vue from 'vue';
 import Router from 'vue-router';
 import SignUp from '@/components/SignUp.vue';
@@ -75,7 +76,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (isDebug) {
-    console.log(` checkAuth::Hook - to:${to.name} from:${from.name}`);
+    console.log(` checkAuth::Hook - to:${to.name} from:${from.name || from.path}`);
   }
   const { currentUser } = firebase.auth();
 
@@ -84,6 +85,20 @@ router.beforeEach((to, from, next) => {
   if (requiresAuth && !currentUser) next({ name: routeNames.LOGIN });
 
   else next();
+});
+
+router.beforeEach((to, from, next) => {
+  if ([routeNames.HOME, routeNames.LOGIN, routeNames.SIGNUP].includes(to.name)) {
+    if (isDebug) console.log('checkActiveKid::Hook - skip');
+    return next();
+  }
+
+  if (isDebug) console.log(` checkActiveKid::Hook - to:${to.name} from:${from.name || from.path}`);
+
+  const { activeKid } = store.state.kids;
+  if (!activeKid) {
+    next({ name: routeNames.HOME });
+  } else next();
 });
 
 export default router;
