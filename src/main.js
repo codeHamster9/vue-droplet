@@ -9,6 +9,7 @@ import store from '@/store';
 import router from '@/router';
 import '@/registerServiceWorker';
 import App from './App.vue';
+import { isDebug } from './utils/helpers';
 
 Vue.use(VueFilterDateFormat);
 Vue.use(VueWait);
@@ -27,15 +28,19 @@ Vue.use(Vuetify, {
 
 firebase.auth().onAuthStateChanged(async (user) => {
   try {
-    await store.dispatch('user/fetch', user.email || 'idansagi@gmail.com');
-  } catch (error) {
-    console.log(error);
-  } finally {
+    if (isDebug) console.log('onAuthStateChanged', user);
+
+    // const { email = 'idansagi@gmail.com' } = user;
+
+    await store.dispatch('user/fetch', 'idansagi@gmail.com');
     new Vue({
       router,
       store,
       wait: new VueWait({ useVuex: true }),
       render: h => h(App),
     }).$mount('#app');
+  } catch (e) {
+    console.warn('Boot Time Error');
+    console.error(e);
   }
 });
