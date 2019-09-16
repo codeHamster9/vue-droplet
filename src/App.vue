@@ -1,10 +1,10 @@
 <template>
-  <v-app dark>
+  <v-app :dark="dark">
     <v-navigation-drawer
       v-model="drawer"
       fixed
       clipped
-      dark
+      :dark="dark"
       app
     >
       <v-list>
@@ -33,6 +33,35 @@
             </v-list-tile-content>
           </v-list-tile>
         </router-link>
+        <v-divider />
+        <v-list-tile
+          ripple
+          @click="settings"
+        >
+          <v-list-tile-action>
+            <v-icon>fa-cog</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Settings
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile
+          ripple
+          @click="logout"
+        >
+          <v-list-tile-action>
+            <v-icon>fa-sign-out-alt</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>
+              Logout
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
@@ -55,7 +84,7 @@
         justify-end
       >
         <v-menu
-          v-model="showMenu"
+
           absolute
           offset-y
           style="max-width: 600px"
@@ -68,13 +97,6 @@
               account_circle
             </v-icon>
           </v-avatar>
-          <v-list>
-            <v-list-tile>
-              <v-list-tile-title @click="logout">
-                Logout
-              </v-list-tile-title>
-            </v-list-tile>
-          </v-list>
         </v-menu>
       </v-layout>
     </v-toolbar>
@@ -102,16 +124,25 @@
         <router-view />
       </v-container>
     </v-content>
+    <dialog-settings
+      :show="showSettings"
+      @close="showSettings = false"
+      @apply="onApply"
+    />
   </v-app>
 </template>
 
 <script>
 import firebase from '@/firebase';
+import DialogSettings from '@/components/DialogSettings.vue';
 
 export default {
+  components: { DialogSettings },
   data: () => ({
     drawer: null,
     showMenu: false,
+    showSettings: false,
+    dark: true,
     items: [
       {
         text: 'Home',
@@ -136,6 +167,13 @@ export default {
     ],
   }),
   methods: {
+    settings() {
+      this.showSettings = true;
+    },
+    onApply(payload) {
+      this.dark = payload.dark;
+      this.showSettings = false;
+    },
     logout() {
       firebase
         .auth()
