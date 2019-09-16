@@ -59,7 +59,7 @@ export default {
     dismiss() {
       this.$emit('close');
     },
-    apply(settings) {
+    apply() {
       this.$emit('apply', this.settings);
     },
   },
